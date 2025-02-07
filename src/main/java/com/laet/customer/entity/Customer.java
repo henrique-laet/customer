@@ -1,8 +1,12 @@
 package com.laet.customer.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Getter
@@ -12,7 +16,6 @@ import java.util.Date;
 @Entity
 @Table(name = "clientes")
 public class Customer {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,6 +28,7 @@ public class Customer {
     @Column(name = "telefone")
     private Integer telephone;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @Column(name = "data_nascimento")
     private Date dateBirth;
 
