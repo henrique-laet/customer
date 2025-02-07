@@ -39,7 +39,7 @@ public class CustomerService {
     public boolean deleteCustomer(Long id) {
         if (customerRepository.existsById(id)) {
             customerRepository.deleteById(id);
-            return  true;
+            return true;
         }
         return false;
     }
