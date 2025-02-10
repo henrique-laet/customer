@@ -1,6 +1,7 @@
 package com.laet.customer.controller;
 
 import com.laet.customer.entity.Customer;
+import com.laet.customer.exception.CustomerNotFoundException;
 import com.laet.customer.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,8 +25,9 @@ public class CustomerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Customer> getById(@PathVariable Long id){
-        Optional<Customer> customer = customerService.getAllById(id);
-        return customer.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.badRequest().build());
+        return customerService.getAllById(id)
+                .map(ResponseEntity::ok)
+                .orElseThrow(() -> new CustomerNotFoundException(id));
     }
 
     @PostMapping
