@@ -1,10 +1,13 @@
 package com.laet.customer.service;
 
+import com.laet.customer.entity.Address;
 import com.laet.customer.entity.Customer;
+import com.laet.customer.repository.AddressRepository;
 import com.laet.customer.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +26,7 @@ public class CustomerService {
     }
 
     public Customer createCustomer(Customer customer) {
+        customer.setDh_incl(LocalDateTime.now());
         return customerRepository.save(customer);
     }
 

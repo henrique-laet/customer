@@ -5,6 +5,8 @@ import com.laet.customer.enums.MaritalStatus;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -24,15 +26,18 @@ public class Customer {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @Column(name = "data_nascimento")
-    private Date dateBirth;
+    private LocalDate dateBirth;
 
     @Enumerated(EnumType.STRING)
     @Column(name =  "estado_civil")
     private MaritalStatus maritalStatus;
 
-    private Timestamp dh_incl;
+    private LocalDateTime dh_incl;
 
-    public Customer(Long id, String name, String rg, String cpf, Date dateBirth, MaritalStatus maritalStatus, Timestamp dh_incl) {
+    public Customer() {
+    }
+
+    public Customer(Long id, String name, String rg, String cpf, LocalDate dateBirth, MaritalStatus maritalStatus, LocalDateTime dh_incl) {
         this.id = id;
         this.name = name;
         this.rg = rg;
@@ -74,11 +79,11 @@ public class Customer {
         this.cpf = cpf;
     }
 
-    public Date getDateBirth() {
+    public LocalDate getDateBirth() {
         return dateBirth;
     }
 
-    public void setDateBirth(Date dateBirth) {
+    public void setDateBirth(LocalDate dateBirth) {
         this.dateBirth = dateBirth;
     }
 
@@ -90,11 +95,11 @@ public class Customer {
         this.maritalStatus = maritalStatus;
     }
 
-    public Timestamp getDh_incl() {
+    public LocalDateTime getDh_incl() {
         return dh_incl;
     }
 
-    public void setDh_incl(Timestamp dh_incl) {
+    public void setDh_incl(LocalDateTime dh_incl) {
         this.dh_incl = dh_incl;
     }
 }

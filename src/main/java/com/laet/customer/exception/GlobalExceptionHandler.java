@@ -10,6 +10,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CustomerNotFoundException.class)
     public ResponseEntity<String> handleCustomerNotFound(CustomerNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getLocalizedMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getLocalizedMessage());
+    }
+
+    @ExceptionHandler(AddressNotFoundException.class)
+    public ResponseEntity<String> handleAddressNotFound(AddressNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getLocalizedMessage());
     }
 }
