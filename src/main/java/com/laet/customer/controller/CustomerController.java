@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/customers")
@@ -27,7 +26,7 @@ public class CustomerController {
     public ResponseEntity<Customer> getById(@PathVariable Long id){
         return customerService.getAllById(id)
                 .map(ResponseEntity::ok)
-                .orElseThrow(() -> new CustomerNotFoundException(id));
+                .orElseThrow(() -> new CustomerNotFoundException());
     }
 
     @PostMapping

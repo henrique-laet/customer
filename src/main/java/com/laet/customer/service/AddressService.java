@@ -53,20 +53,25 @@ public class AddressService {
     }
 
     public Address updateAddress(Long id, AddressDto addressDto) {
-        if (!addressRepository.existsById(id)) {
-            throw new AddressNotFoundException("Não foi possivel fazer a atualizacao com o ID: " + id);
-        }
+        Address address = addressRepository.findById(id)
+                .orElseThrow(() -> new AddressNotFoundException("Não foi possível fazer a atualização do endereço com o ID: " + id));
 
-        Address address = new Address();
-
-        address.setId(id);
         address.setRoad(addressDto.getRoad());
         address.setNumber(addressDto.getNumber());
         address.setNeighborhood(addressDto.getNeighborhood());
         address.setCity(addressDto.getCity());
         address.setState(addressDto.getState());
         address.setCep(addressDto.getCep());
+        address.setDh_incl(LocalDateTime.now());
 
+        if (addressDto.getCustomerId() != null) {
+            Optional<Customer> customer = customerRepository.findById(addressDto.getCustomerId());
+            if (customer.isPresent()) {
+                address.setCustomer(customer.get());
+            } else {
+                throw new AddressNotFoundException("Cliente não encontrado com ID: " + addressDto.getCustomerId());
+            }
+        }
         return addressRepository.save(address);
     }
 
