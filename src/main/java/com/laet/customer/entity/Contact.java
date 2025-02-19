@@ -1,6 +1,9 @@
 package com.laet.customer.entity;
 
+import com.laet.customer.validation.ValidTelephone;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
@@ -13,17 +16,23 @@ public class Contact {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Email(message = "Email inválido")
+    @NotBlank(message = "O email não pode estar nulo")
     @Column(name = "email_principal")
     private String mainEmail;
 
+    @Email(message = "Email inválido")
     @Column(name = "email_secundario")
     private String secondaryEmail;
 
+    @ValidTelephone(message = "Telefone Inválido")
+    @NotBlank(message = "O telefone pricipal não pode estar nulo")
     @Column(name = "telefone_principal")
-    private Long mainTelephoneNumber;
+    private String mainTelephoneNumber;
 
+    @ValidTelephone(message = "Telefone Inválido")
     @Column(name = "telefone_secundario")
-    private Long secondaryTelephoneNumber;
+    private String secondaryTelephoneNumber;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
@@ -34,7 +43,7 @@ public class Contact {
     public Contact() {
     }
 
-    public Contact(Long id, String mainEmail, String secondaryEmail, Long mainTelephoneNumber, Long secondaryTelephoneNumber, Customer customer,LocalDateTime dh_incl) {
+    public Contact(Long id, String mainEmail, String secondaryEmail, String mainTelephoneNumber, String secondaryTelephoneNumber, Customer customer,LocalDateTime dh_incl) {
         this.id = id;
         this.mainEmail = mainEmail;
         this.secondaryEmail = secondaryEmail;
@@ -68,19 +77,19 @@ public class Contact {
         this.secondaryEmail = secondaryEmail;
     }
 
-    public Long getMainTelephoneNumber() {
+    public String getMainTelephoneNumber() {
         return mainTelephoneNumber;
     }
 
-    public void setMainTelephoneNumber(Long mainTelephoneNumber) {
+    public void setMainTelephoneNumber(String mainTelephoneNumber) {
         this.mainTelephoneNumber = mainTelephoneNumber;
     }
 
-    public Long getSecondaryTelephoneNumber() {
+    public String getSecondaryTelephoneNumber() {
         return secondaryTelephoneNumber;
     }
 
-    public void setSecondaryTelephoneNumber(Long secondaryTelephoneNumber) {
+    public void setSecondaryTelephoneNumber(String secondaryTelephoneNumber) {
         this.secondaryTelephoneNumber = secondaryTelephoneNumber;
     }
 

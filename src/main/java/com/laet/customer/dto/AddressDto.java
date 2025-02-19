@@ -1,6 +1,7 @@
 package com.laet.customer.dto;
 
 import com.laet.customer.entity.Customer;
+import com.laet.customer.validation.ValidCep;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ public class AddressDto {
     private String neighborhood;
     private String city;
     private String state;
+
     private String cep;
     private Long customerId;
 

@@ -3,15 +3,19 @@ package com.laet.customer.controller;
 import com.laet.customer.entity.Customer;
 import com.laet.customer.exception.CustomerNotFoundException;
 import com.laet.customer.service.CustomerService;
+import jakarta.validation.Valid;
+import org.aspectj.bridge.IMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/customers")
+@Validated
 public class CustomerController {
 
     @Autowired
@@ -30,7 +34,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<Customer> createdCustomer(@RequestBody Customer customer) {
+    public ResponseEntity<Customer> createdCustomer(@Valid @RequestBody Customer customer) {
         Customer createdCustomer = customerService.createCustomer(customer);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
     }

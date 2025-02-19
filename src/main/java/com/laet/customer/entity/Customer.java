@@ -2,7 +2,16 @@ package com.laet.customer.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.laet.customer.enums.MaritalStatus;
+import com.laet.customer.validation.ValidAge;
+import com.laet.customer.validation.ValidRg;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -17,19 +26,28 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @Pattern(regexp = "^[A-Z]+(.)*", message = "Primeira letra do nome deve ser maiúscula")
     @Column(name = "nome")
     private String name;
 
+    @ValidRg
     private String rg;
 
+    @CPF(message = "Número CPF inválido")
+    @NotBlank(message = "CPF não informado")
     private String cpf;
 
+
+    @NotNull(message = "A data de nascimento nao pode ser nula")
+    @Past(message = "A data de nascimento deve ser no passado")
+    @ValidAge(min = 18, max = 120, message = "A idade deve estar entre 18 e 100 anos")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @Column(name = "data_nascimento")
     private LocalDate dateBirth;
 
     @Enumerated(EnumType.STRING)
-    @Column(name =  "estado_civil")
+    @Column(name = "estado_civil")
     private MaritalStatus maritalStatus;
 
     private LocalDateTime dh_incl;

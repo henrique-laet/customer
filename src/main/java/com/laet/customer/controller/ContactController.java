@@ -3,22 +3,25 @@ package com.laet.customer.controller;
 import com.laet.customer.dto.ContactDto;
 import com.laet.customer.entity.Contact;
 import com.laet.customer.service.ContactService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/contacts")
+@Validated
 public class ContactController {
 
     @Autowired
     private ContactService contactService;
 
     @PostMapping
-    public ResponseEntity<Contact> createdContact(@RequestBody ContactDto contactDto) {
+    public ResponseEntity<Contact> createdContact(@Valid @RequestBody ContactDto contactDto) {
         Contact createdContact = contactService.createdContact(contactDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdContact);
     }

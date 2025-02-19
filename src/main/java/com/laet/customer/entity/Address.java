@@ -1,6 +1,7 @@
 package com.laet.customer.entity;
 
 
+import com.laet.customer.validation.ValidCep;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -29,6 +30,7 @@ public class Address {
     @Column(name = "estado")
     private String state;
 
+    @ValidCep
     @Column(name = "cep")
     private String cep;
 

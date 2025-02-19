@@ -1,16 +1,31 @@
 package com.laet.customer.dto;
 
-import java.math.BigInteger;
+import com.laet.customer.validation.ValidTelephone;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 import java.time.LocalDateTime;
 
 
 public class ContactDto {
 
     private Long id;
+
+    @Email(message = "Email inválido")
+    @NotBlank(message = "O email não pode estar nulo")
+    @Column(name = "email_principal")
     private String mainEmail;
+
+    @Email(message = "Email inválido")
     private String secondaryEmail;
-    private Long mainTelephoneNumber;
-    private Long secondaryTelephoneNumber;
+
+    @ValidTelephone(message = "Telefone Inválido")
+    @NotBlank(message = "O telefone pricipal não pode estar nulo")
+    private String mainTelephoneNumber;
+
+    @ValidTelephone(message = "Telefone Inválido")
+    private String secondaryTelephoneNumber;
     private Long costumerId;
     private LocalDateTime dh_incl;
 
@@ -39,19 +54,19 @@ public class ContactDto {
         this.secondaryEmail = secondaryEmail;
     }
 
-    public Long getMainTelephoneNumber() {
+    public String getMainTelephoneNumber() {
         return mainTelephoneNumber;
     }
 
-    public void setMainTelephoneNumber(Long mainTelephoneNumber) {
+    public void setMainTelephoneNumber(String mainTelephoneNumber) {
         this.mainTelephoneNumber = mainTelephoneNumber;
     }
 
-    public Long getSecondaryTelephoneNumber() {
+    public String getSecondaryTelephoneNumber() {
         return secondaryTelephoneNumber;
     }
 
-    public void setSecondaryTelephoneNumber(Long secondaryTelephoneNumber) {
+    public void setSecondaryTelephoneNumber(String secondaryTelephoneNumber) {
         this.secondaryTelephoneNumber = secondaryTelephoneNumber;
     }
 
