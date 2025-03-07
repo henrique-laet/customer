@@ -17,6 +17,8 @@ public class AddressDto {
     private String state;
 
     private String cep;
+
+    private String complement;
     private Long customerId;
 
     private LocalDateTime dh_incl;
@@ -91,5 +93,13 @@ public class AddressDto {
 
     public void setDh_incl(LocalDateTime dh_incl) {
         this.dh_incl = dh_incl;
+    }
+
+    public String getComplement() {
+        return complement;
+    }
+
+    public void setComplement(String complement) {
+        this.complement = complement;
     }
 }

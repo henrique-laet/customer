@@ -34,6 +34,9 @@ public class Address {
     @Column(name = "cep")
     private String cep;
 
+    @Column(name = "complemento")
+    private String complement;
+
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Customer customer;
@@ -45,7 +48,7 @@ public class Address {
     public Address() {
     }
 
-    public Address(Long id, String road, Integer number, String neighborhood, String city, String state, String cep, Customer customer, LocalDateTime dh_incl) {
+    public Address(Long id, String road, Integer number, String neighborhood, String city, String state, String cep, Customer customer, LocalDateTime dh_incl, String complement) {
         this.id = id;
         this.road = road;
         this.number = number;
@@ -55,6 +58,7 @@ public class Address {
         this.cep = cep;
         this.customer = customer;
         this.dh_incl = LocalDateTime.now();
+        this.complement = complement;
     }
 
 
@@ -128,5 +132,13 @@ public class Address {
 
     public void setDh_incl(LocalDateTime dh_incl) {
         this.dh_incl = dh_incl;
+    }
+
+    public String getComplement() {
+        return complement;
+    }
+
+    public void setComplement(String complement) {
+        this.complement = complement;
     }
 }

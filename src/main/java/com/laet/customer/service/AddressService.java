@@ -6,7 +6,9 @@ import com.laet.customer.entity.Customer;
 import com.laet.customer.exception.AddressNotFoundException;
 import com.laet.customer.repository.AddressRepository;
 import com.laet.customer.repository.CustomerRepository;
+import com.laet.customer.validation.consultacep.CepResultDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,6 +23,9 @@ public class AddressService {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private ConsultaCepService consultaCepService;
 
     public List<Address> getAllAddress() {
         return addressRepository.findAll();
@@ -37,14 +42,20 @@ public class AddressService {
         if (customer.isPresent()) {
             Address address = new Address();
 
-            address.setRoad(addressDto.getRoad());
-            address.setNumber(addressDto.getNumber());
-            address.setNeighborhood(addressDto.getNeighborhood());
-            address.setCity(addressDto.getCity());
-            address.setState(addressDto.getState());
+
             address.setCep(addressDto.getCep());
+            address.setNumber(addressDto.getNumber());
+            address.setComplement(addressDto.getComplement());
             address.setCustomer(customer.get());
             address.setDh_incl(LocalDateTime.now());
+
+            CepResultDTO cepResultDTO = consultaCepService.consultaCep(addressDto.getCep());
+
+            address.setRoad(cepResultDTO.getLogradouro());
+            address.setNeighborhood(cepResultDTO.getBairro());
+            address.setCity(cepResultDTO.getLocalidade());
+            address.setState(cepResultDTO.getUf());
+
 
             return addressRepository.save(address);
         } else {
